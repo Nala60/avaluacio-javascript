@@ -1,0 +1,62 @@
+{
+    "helmet": {
+        "multiplier": 1.2,
+        "variants": [
+            {
+                "name": "cloth",
+                "defense": 2.5,
+                "power": 10.0
+            },
+            {
+                "name": "leather",
+                "defense": 5.0,
+                "power": 5.0
+            },
+            {
+                "name": "plate",
+                "defense": 10.0,
+                "power": 2.5
+            }
+        ]
+    },
+    "armor": {
+        "multiplier": 2.0,
+        "variants": [
+            {
+                "name": "cloth",
+                "defense": 2.5,
+                "power": 10.0
+            },
+            {
+                "name": "leather",
+                "defense": 5.0,
+                "power": 5.0
+            },
+            {
+                "name": "plate",
+                "defense": 10.0,
+                "power": 2.5
+            }
+        ]
+    },
+    "shoe": {
+        "multiplier": 1.0,
+        "variants": [
+            {
+                "name": "cloth",
+                "defense": 2.5,
+                "power": 10.0
+            },
+            {
+                "name": "leather",
+                "defense": 5.0,
+                "power": 5.0
+            },
+            {
+                "name": "plate",
+                "defense": 10.0,
+                "power": 2.5
+            }
+        ]
+    }
+}

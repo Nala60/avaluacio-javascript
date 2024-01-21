@@ -1,0 +1,41 @@
+.popup-wrapper {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(10px);
+    width: 100vw;
+    height: 100vh;
+    &:has(> .popup[data-active="true"]) {
+        display: block;
+    }
+    & > .popup {
+        display: inline-block;
+        --popup-margin: 50px;
+        margin: var(--popup-margin);
+        width: calc(100% - var(--popup-margin) * 2);
+        height: calc(100% - var(--popup-margin) * 2);
+        background-color: var(--bg-color);
+        border: 2px solid black;
+    }
+}
+
+.startpopup {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+    & button {
+        width: 200px;
+        height: 50px;
+        font-size: xx-large;
+        font-weight: bolder;
+    }
+}
+.endpopup {
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+
+    font-size: xx-large;
+    font-weight: bolder;
+}

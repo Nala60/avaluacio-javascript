@@ -1,0 +1,62 @@
+.item {
+    width: 50px;
+    height: 50px;
+    outline: 1px dashed black;
+    background-size: 100%;
+    &:not([data-type]), &[data-type=""] {
+        background-image: url(/assets/images/items/helmets/placeholder.png)
+    }
+    &[data-type="helmets"] {
+        &:not([data-familly]), &[data-familly=""] {
+            background-image: url(/assets/images/items/helmets/placeholder.png)
+        }
+        &[data-familly="cloth"] {
+            background-image: url(/assets/images/items/helmets/cloth.png);
+        }
+        &[data-familly="leather"] {
+            background-image: url(/assets/images/items/helmets/leather.png);
+        }
+        &[data-familly="plate"] {
+            background-image: url(/assets/images/items/helmets/plate.png);
+        }
+    }
+    &[data-type="shoes"] {
+        &:not([data-familly]), &[data-familly=""] {
+            background-image: url(/assets/images/items/shoes/placeholder.png)
+        }
+        &[data-familly="cloth"] {
+            background-image: url(/assets/images/items/shoes/cloth.png);
+        }
+        &[data-familly="leather"] {
+            background-image: url(/assets/images/items/shoes/leather.png);
+        }
+        &[data-familly="plate"] {
+            background-image: url(/assets/images/items/shoes/plate.png);
+        }
+    }
+    &[data-type="armors"] {
+        &:not([data-familly]), &[data-familly=""] {
+            background-image: url(/assets/images/items/armors/placeholder.png)
+        }
+        &[data-familly="cloth"] {
+            background-image: url(/assets/images/items/armors/cloth.png);
+        }
+        &[data-familly="leather"] {
+            background-image: url(/assets/images/items/armors/leather.png);
+        }
+        &[data-familly="plate"] {
+            background-image: url(/assets/images/items/armors/plate.png);
+        }
+    }
+    /* &[data-type="weapons"] {
+        &[data-familly="cloth"] {
+
+        }
+        &[data-familly="leather"] {
+            
+        }
+        &[data-familly="plate"] {
+            
+        }
+    } */
+}

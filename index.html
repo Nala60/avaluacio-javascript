@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B A T T L E S</title>
+    <link rel="stylesheet" href="/assets/styles/style.css" />
+    <script src="/assets/scripts/main.mjs" defer></script>
+</head>
+<body>
+    <div id="app_root">
+        <div id="app">
+            <main data-turn="0">
+                <div class="player1">
+                    <div class="header"><span class="name">Player 1</span></div>
+                    <div class="equipment"><div class="item helmet"></div><div class="item armor"></div><div class="item shoe"></div><div class="item weapon"></div></div>
+                </div>
+                <div class="screen">
+                    <div class="info"><span>info</span></div>
+                    <div class="selection"></div>
+                </div>
+                <div class="player2">
+                    <div class="header"><span class="name">Player 2</span></div>
+                    <div class="equipment"><div class="item helmet"></div><div class="item armor"></div><div class="item shoe"></div><div class="item weapon"></div></div>
 
+                </div>
+            </main>
+            <div class="popup-wrapper">
+                <div class="startpopup popup" data-active="true">
+                    <button id="start">START</button>
+                </div>
+            </div>
+            <div class="popup-wrapper">
+                <div class="endpopup popup" data-active="false"><span>the end</span></div>
+            </div>
+            <template id="item-template"><div class="item" data-type=""></div></template>
+        </div>
+    </div>
+</body>
+</html>
