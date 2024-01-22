@@ -1,23 +1,23 @@
 .item {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     outline: 1px dashed black;
     background-size: 100%;
     &:not([data-type]), &[data-type=""] {
-        background-image: url(/assets/images/items/helmets/placeholder.png)
+        background-image: /* url(/assets/images/items/helmets/placeholder.png)*/
     }
     &[data-type="helmets"] {
         &:not([data-familly]), &[data-familly=""] {
-            background-image: url(/assets/images/items/helmets/placeholder.png)
+            --TEST: 1;
         }
         &[data-familly="cloth"] {
-            background-image: url(/assets/images/items/helmets/cloth.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_HEAD_CLOTH_SET1.png)
         }
         &[data-familly="leather"] {
-            background-image: url(/assets/images/items/helmets/leather.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_HEAD_LEATHER_SET1.png)
         }
         &[data-familly="plate"] {
-            background-image: url(/assets/images/items/helmets/plate.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_HEAD_PLATE_SET1.png)
         }
     }
     &[data-type="shoes"] {
@@ -25,13 +25,13 @@
             background-image: url(/assets/images/items/shoes/placeholder.png)
         }
         &[data-familly="cloth"] {
-            background-image: url(/assets/images/items/shoes/cloth.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_SHOES_CLOTH_SET1.png)
         }
         &[data-familly="leather"] {
-            background-image: url(/assets/images/items/shoes/leather.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_SHOES_LEATHER_SET1.png)
         }
         &[data-familly="plate"] {
-            background-image: url(/assets/images/items/shoes/plate.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_SHOES_PLATE_SET1.png)
         }
     }
     &[data-type="armors"] {
@@ -39,13 +39,13 @@
             background-image: url(/assets/images/items/armors/placeholder.png)
         }
         &[data-familly="cloth"] {
-            background-image: url(/assets/images/items/armors/cloth.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_ARMOR_CLOTH_SET1.png)
         }
         &[data-familly="leather"] {
-            background-image: url(/assets/images/items/armors/leather.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_ARMOR_LEATHER_SET1.png)
         }
         &[data-familly="plate"] {
-            background-image: url(/assets/images/items/armors/plate.png);
+            background-image: url(https://render.albiononline.com/v1/item/T4_ARMOR_PLATE_SET1.png)
         }
     }
     /* &[data-type="weapons"] {
@@ -59,4 +59,29 @@
             
         }
     } */
+    position: relative;
+    &[data-def] {
+        &::before {
+            content: 'def: ' attr(data-def);
+            font-weight: bold;
+            position: absolute;
+            top: -20px;
+            left: -5px;
+        }
+    }
+    &[data-pwr] {
+        &::after {
+            content: 'pwr: ' attr(data-pwr);
+            font-weight: bold;
+            text-align: right;
+            position: absolute;
+            top: -20px;
+            right: -5px;
+        }
+    }
+}
+.equipment > * {
+    outline: 1px dashed black;
+    width: 100px;
+    height: 100px;
 }

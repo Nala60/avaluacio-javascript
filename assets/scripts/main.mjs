@@ -17,15 +17,16 @@ Object.defineProperty(players, '2', {
 const wait = ms => new Promise(resolve => setInterval(resolve, ms));
 let _info_running = false;
 const info = (text, waitms = 0) => {
-    let totalWait = 2500 + waitms + 60;
-    console.log('info', text);
     const info = document.querySelector('main .info');
+    info.classList.remove('animate');
+    let totalWait = 2500 + waitms + 1000;
+    console.log('info', text);
     info.querySelector('span').textContent = text;
 
-    info.classList.remove('animate');
-    setInterval(() => {
+    setTimeout(() => {
         info.classList.add('animate');
-    }, 50)
+        setTimeout(() => info.classList.remove('animate'), 2500);
+    }, 200)
     return new Promise(resolve => setInterval(async () => {
         resolve();
     }, totalWait));
@@ -55,9 +56,9 @@ function startPopupShow() {
 function startPopupHide() {
     startPopup.dataset.active = false;
 }
-function endPopupShow() {
+function endPopupShow(lost) {
+    endPopup.querySelector('span').textContent = `Player ${lost} lost!`;
     endPopup.dataset.active = true;
-
     setTimeout(() => {
         endPopupHide();
         startPopupShow();
@@ -97,7 +98,9 @@ const createItem = (type, familly) => {
     const clone = document.importNode(template.content, true);
     const item = clone.querySelector('.item');
     item.dataset.type = type;
-    item.dataset.familly = familly;
+    item.dataset.familly = familly.name;
+    item.dataset.def = familly.defense;
+    item.dataset.pwr = familly.power;
     return item;
 }
 
@@ -116,9 +119,13 @@ function init() {
         }
         for(const key in pobj) {
             if(key === 'weapon') continue;
+            const i = document.createElement('div');
+            i.classList.add('item');
 
-            pobj[key].dataset.type = `${key}s`;
-            pobj[key].dataset.familly = '';
+            i.dataset.type = `${key}s`;
+            i.dataset.familly = '';
+
+            pobj[key].appendChild(i);
         }
         return pobj;
     }
@@ -161,17 +168,20 @@ async function pick() {
                 console.log('yeah');
                 const player = game.getPlayer(game.turn);
                 const i = player[noS(target.dataset.type)];
-                i.dataset.type = target.dataset.type;
-                i.dataset.familly = target.dataset.familly;
+                clear(i);
+                i.appendChild(event.target);
                 resolve();
             }
             selection.addEventListener('click', listener);
         });
     }
-    const gearFactory = function*() {
+    const gearFactory = async function*() {
+        const d = await data();
+        console.log(d);
         for(const type of ['helmet', 'armor', 'shoe']) {
-            console.log('factory', type);
-            for(const familly of ['cloth', 'leather', 'plate']) {
+            console.log('factory', type, );
+            const variants = d[type].variants;
+            for(const familly of variants) {
                 const item = createItem(`${type}s`, familly);
                 selection.appendChild(item);
             }
@@ -183,7 +193,7 @@ async function pick() {
     }
     game.turn = game.pickPreference;
     
-    for(const type of gearFactory()) {
+    for await(const type of gearFactory()) {
         for(const _ of range(2)) {
             await info(`Player ${game.turn}'s turn to pick!`);
             await waitPick();
@@ -195,6 +205,52 @@ async function pick() {
 }
 async function fight() {
     console.log('fight');
+    const d = await data();
+    await info("Fight!");
+
+    let p1 = 50;
+    let p1def 
+        = game.player1.helmet.querySelector('.item').dataset.def * d.helmet.multiplier
+        + game.player1.armor.querySelector('.item').dataset.def * d.armor.multiplier
+        + game.player1.shoe.querySelector('.item').dataset.def * d.shoe.multiplier
+        + 2
+
+    let p1pwr
+        = game.player1.helmet.querySelector('.item').dataset.pwr * d.helmet.multiplier
+        + game.player1.armor.querySelector('.item').dataset.pwr * d.armor.multiplier
+        + game.player1.shoe.querySelector('.item').dataset.pwr * d.shoe.multiplier
+    let p2 = 50;
+    let p2def 
+        = game.player2.helmet.querySelector('.item').dataset.def * d.helmet.multiplier
+        + game.player2.armor.querySelector('.item').dataset.def * d.armor.multiplier
+        + game.player2.shoe.querySelector('.item').dataset.def * d.shoe.multiplier
+        + 2
+
+    let p2pwr
+        = game.player2.helmet.querySelector('.item').dataset.pwr * d.helmet.multiplier
+        + game.player2.armor.querySelector('.item').dataset.pwr * d.armor.multiplier
+        + game.player2.shoe.querySelector('.item').dataset.pwr * d.shoe.multiplier
+
+    game.turn = game.fightPreference;
+
+    console.log(p1pwr, p2pwr, p1def, p2def)
+
+    while(true) {
+        const def = game.turn == 1 ? p2def : p1def;
+        const pwr = game.turn == 2 ? p2def : p1def;
+        const dmg = pwr * ((100 - def) / 100) * ((Math.random() + 0.5) * 0.5 + 0.5) * 0.7;
+        await info(`Player ${game.turn} did ${dmg.toFixed(2)} damage!`);
+        if(game.turn == 1) {
+            p2 -= dmg;
+        } else {
+            p1 -= dmg;
+        }
+
+        console.log(p1, p2, game.turn);
+        if(p1 < 0) return 1;
+        if(p2 < 0) return 2;
+        game.nextTurn();
+    }
 }
 async function start() {
     await wait(250);
@@ -203,8 +259,8 @@ async function start() {
     randomize();
     console.log(game);
     await pick();
-    await fight();
-    endPopupShow();
+    const lost = await fight();
+    endPopupShow(lost);
 }
 
 startPopupButton.addEventListener('click', startPopupHandler);
