@@ -122,6 +122,8 @@ function init() {
             const i = document.createElement('div');
             i.classList.add('item');
 
+            clear(pobj[key]);
+
             i.dataset.type = `${key}s`;
             i.dataset.familly = '';
 
