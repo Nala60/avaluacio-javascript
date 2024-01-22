@@ -242,8 +242,10 @@ async function fight() {
         await info(`Player ${game.turn} did ${dmg.toFixed(2)} damage!`);
         if(game.turn == 1) {
             p2 -= dmg;
+            document.querySelector('.p2hp').textContent = p2.toFixed(2);
         } else {
             p1 -= dmg;
+            document.querySelector('.p1hp').textContent = p1.toFixed(2);
         }
 
         console.log(p1, p2, game.turn);
